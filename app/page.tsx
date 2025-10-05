@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
+import { useCurrency } from "@/hooks/use-currency"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -41,6 +42,7 @@ export default function GoogleWorkspaceReseller() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [submitMessage, setSubmitMessage] = useState('')
+  const { currencyData, loading: currencyLoading } = useCurrency()
 
   useEffect(() => {
     setIsVisible(true)
@@ -205,7 +207,7 @@ export default function GoogleWorkspaceReseller() {
                     id="phone"
                     name="phone"
                     type="tel"
-                    placeholder="+91 98765 43210"
+                    placeholder="+971 55 793 4049"
                     required
                     disabled={isSubmitting}
                     className="bg-white/50 backdrop-blur-sm border-gray-200 disabled:opacity-50"
@@ -454,12 +456,26 @@ export default function GoogleWorkspaceReseller() {
               </CardTitle>
               <CardDescription>Perfect for growing enterprises with AI</CardDescription>
               <div className="mt-4">
-                <span className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  ₹1,700
-                </span>
-                <span className="text-gray-600">/user/month</span>
+                {currencyLoading ? (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                    <span className="text-gray-500">Loading pricing...</span>
+                  </div>
+                ) : (
+                  <>
+                    <span className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                      {currencyData?.pricing.monthly.formatted || '$18'}
+                    </span>
+                    <span className="text-gray-600">/user/month</span>
+                  </>
+                )}
               </div>
               <p className="text-sm text-gray-500 mt-2">Annual commitment • Minimum 100 users</p>
+              {currencyData && currencyData.currency !== 'USD' && (
+                <p className="text-xs text-blue-600 mt-1">
+                  Pricing shown in {currencyData.currency} based on your location ({currencyData.country})
+                </p>
+              )}
               <p className="text-xs text-green-600 font-medium mt-1 animate-pulse">
                 Up to 75% discount available on request
               </p>
@@ -659,9 +675,18 @@ export default function GoogleWorkspaceReseller() {
                   className="h-8 w-auto object-contain filter brightness-150"
                 />
               </div>
-              <p className="text-gray-400">
+              <p className="text-gray-400 mb-4">
                 Authorized Google Workspace reseller helping businesses transform their productivity with AI.
               </p>
+              <div className="text-sm text-gray-400 space-y-1">
+                <p className="font-semibold text-white">Innovatech Retail Solutions LLC</p>
+                <p>Al Ramla – East, Sharjah</p>
+                <p>United Arab Emirates</p>
+                <div className="mt-3 space-y-1">
+                  <p><span className="font-medium">Corporate Tax Registration:</span> 104702883000001</p>
+                  <p><span className="font-medium">Business License:</span> 2433141.0</p>
+                </div>
+              </div>
             </div>
             <div>
               <h3 className="font-semibold mb-4">AI Services</h3>
@@ -686,18 +711,18 @@ export default function GoogleWorkspaceReseller() {
               <div className="space-y-2 text-gray-400">
                 <div className="flex items-center space-x-2">
                   <Phone className="w-4 h-4" />
-                  <span>+91 98765 43210</span>
+                  <span>+971 55 793 4049</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Mail className="w-4 h-4" />
-                  <span>sales@workspacepartner.com</span>
+                  <span>sales@digitbite.com</span>
                 </div>
               </div>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
             <p>
-              &copy; 2024 Digitbite. All rights reserved. Google Workspace and Gemini Pro are trademarks of
+              &copy; 2024 Innovatech Retail Solutions LLC. All rights reserved. Google Workspace and Gemini Pro are trademarks of
               Google LLC.
             </p>
           </div>

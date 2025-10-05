@@ -8,9 +8,8 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'Digitbite - Google Workspace Reseller',
+  title: 'Innovatech Retail Solutions LLC - Google Workspace Reseller',
   description: 'Authorized Google Workspace reseller helping businesses transform their productivity with AI.',
-  generator: 'v0.dev',
 }
 
 export default function RootLayout({
